@@ -20,6 +20,8 @@
 package com.xuncorp.spw.workshop.api
 
 import com.xuncorp.spw.workshop.api.config.ConfigManager
+import com.xuncorp.spw.workshop.api.event.PlaybackEventBus
+import com.xuncorp.spw.workshop.api.pipeline.lyrics.LyricsPipeline
 
 /**
  * SPW 创意工坊 API
@@ -30,6 +32,20 @@ interface WorkshopApi {
     val ui: Ui
 
     val manager: Manager
+
+    /**
+     * 播放状态事件
+     *
+     * 插件通过订阅这些 Flow 来接收播放状态变化通知
+     */
+    val playbackEventBus: PlaybackEventBus
+
+    /**
+     * 歌词管道
+     *
+     * 插件通过注册 [LyricsProvider] 来参与歌词查找流程
+     */
+    val lyricsPipeline: LyricsPipeline
 
     /**
      * 实用工具相关
@@ -139,5 +155,15 @@ interface WorkshopApi {
             @JvmStatic
             @JvmName("manager")
             get() = instance.manager
+
+        val playbackEventBus: PlaybackEventBus
+            @JvmStatic
+            @JvmName("events")
+            get() = instance.playbackEventBus
+
+        val lyricsPipeline: LyricsPipeline
+            @JvmStatic
+            @JvmName("lyricsPipeline")
+            get() = instance.lyricsPipeline
     }
 }

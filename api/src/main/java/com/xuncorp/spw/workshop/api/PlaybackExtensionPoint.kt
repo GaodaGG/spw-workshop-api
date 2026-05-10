@@ -23,7 +23,13 @@ import org.pf4j.ExtensionPoint
 
 /**
  * 播放拓展点
+ *
+ * @deprecated 请迁移到 [WorkshopEventBus] 和 [LyricsPipeline]
  */
+@Deprecated(
+    "迁移到 WorkshopEventBus 和 LyricsPipeline",
+    ReplaceWith("WorkshopApi.instance.events / lyricsPipeline")
+)
 interface PlaybackExtensionPoint : ExtensionPoint {
     /**
      * 播放器状态改变的回调

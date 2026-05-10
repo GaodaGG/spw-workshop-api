@@ -26,6 +26,9 @@ dependencies {
     // Kotlin 标准库
     compileOnly(kotlin("stdlib"))
 
+    // Kotlin 协程（WorkshopEventBus 使用 Flow）
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+
     // SPW Workshop API
     project(":api").let {
         compileOnly(it)
