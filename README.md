@@ -157,6 +157,16 @@ class ClassicalPlugin : SpwPlugin() {
 未声明 `Plugin-Api-Min` 的旧插件按 API level 1 处理；未声明
 `Plugin-Api-Max` 表示不限制宿主上限。未声明的敏感能力不会自动授权。
 
+## 插件包格式
+
+插件包后缀与声明的 API level 严格绑定，由宿主在导入与加载时校验：
+
+- 新 API 插件（`Plugin-Api-Min` 声明为当前 level，如 `2`）必须使用 `.spwx` 后缀分发
+- 旧 API 插件（未声明 `Plugin-Api-Min`，按 level 1 处理）继续使用 `.zip` / `.jar` 后缀
+
+`.spwx` 内部仍是与 `.zip` 相同的 classes/lib 布局，仅需将打包任务的
+`archiveExtension`（以及 `archiveFileName` 中的后缀）改为 `spwx` 即可。
+
 ## 音频管线
 
 Workshop API 0.2 支持安全响度增益、自定义解码器和受信任的实时 PCM 处理器。接口契约、选择顺序、线程限制及示例见 [音频管线文档](docs/audio-pipeline.md)。

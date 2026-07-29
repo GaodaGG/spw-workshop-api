@@ -70,12 +70,12 @@ tasks.named<Jar>("jar") {
     }
 }
 
-// 创建插件分发包
+// 创建插件分发包(新 API 插件必须使用 .spwx 后缀)
 tasks.register<Jar>("plugin") {
     destinationDirectory.set(
         file(System.getenv("APPDATA") + "/Salt Player for Windows/workshop/plugins/")
     )
-    archiveFileName.set("$pluginName-$pluginVersion.zip")
+    archiveFileName.set("$pluginName-$pluginVersion.spwx")
 
     into("classes") {
         with(tasks.named<Jar>("jar").get())
@@ -88,5 +88,5 @@ tasks.register<Jar>("plugin") {
                 .filter { it.name.endsWith("jar") }
         })
     }
-    archiveExtension.set("zip")
+    archiveExtension.set("spwx")
 }
