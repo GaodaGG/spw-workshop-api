@@ -14,6 +14,7 @@ class MainPlugin(
 ) : SpwPlugin(pluginContext) {
     private val eventBusExample = EventBusExample()
     private val lyricsProviderExample = LyricsProviderExample()
+    private val audioPipelineExamples = AudioPipelineExamples()
 
     override fun start() {
         WorkshopApi.ui.toast("示例插件已启动", WorkshopApi.Ui.ToastType.Success)
@@ -25,6 +26,8 @@ class MainPlugin(
         // 注册歌词提供者
         lyricsProviderExample.register()
 
+        audioPipelineExamples.register()
+
         ConfigExample()
     }
 
@@ -34,6 +37,8 @@ class MainPlugin(
 
         // 注销歌词提供者
         lyricsProviderExample.unregister()
+
+        audioPipelineExamples.close()
 
         WorkshopApi.ui.toast("示例插件已停止", WorkshopApi.Ui.ToastType.Warning)
     }

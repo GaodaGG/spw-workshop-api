@@ -7,7 +7,13 @@ plugins {
 }
 
 group = "com.github.Moriafly"
-version = "0.2.0-dev01"
+version = "0.2.0-dev02"
+
+val legacyDev20Api by configurations.creating {
+    isCanBeConsumed = false
+    isCanBeResolved = true
+    isTransitive = false
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -28,6 +34,17 @@ dependencies {
     api(libs.compose.foundation)
     api(libs.salt.ui)
     testImplementation(libs.junit)
+    legacyDev20Api("com.github.Moriafly:spw-workshop-api:0.1.0-dev20")
+}
+
+tasks.test {
+    inputs.files(legacyDev20Api)
+    doFirst {
+        systemProperty(
+            "spw.workshop.legacyDev20Jar",
+            legacyDev20Api.singleFile.absolutePath
+        )
+    }
 }
 
 publishing {

@@ -30,22 +30,23 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 
     // SPW Workshop API
-    project(":api").let {
-        compileOnly(it)
-        kapt(it)
+    val localApiProject = rootProject.findProject(":api")
+        ?.takeUnless { it == project }
+    if (localApiProject != null) {
+        compileOnly(localApiProject)
+        kapt(localApiProject)
+    } else {
+        compileOnly("com.github.Moriafly:spw-workshop-api:0.2.0-dev02")
+        kapt("com.github.Moriafly:spw-workshop-api:0.2.0-dev02")
     }
-
-//     实际开发中应该使用下面的依赖
-//    compileOnly(libs.spw.workshop.api)
-//    kapt(libs.spw.workshop.api)
 }
 
 // 插件元数据配置
-val pluginClass = "com.gg.example.MainPlugin"
+val pluginClass = "com.gg.example.AudioPipelineExamplePlugin"
 val pluginId = "com.gg.example"
-val pluginName = "ExamplePlugin"
-val pluginDescription = "An example plugin for Salt Player for Windows"
-val pluginVersion = "1.0.0"
+val pluginName = "AudioPipelineExample"
+val pluginDescription = "SPW Workshop 音频管线示例插件"
+val pluginVersion = "2.0.0"
 val pluginProvider = "Zeshi Palace"
 val pluginRepository = "https://github.com/Moriafly/spw-workshop-api/tree/main/example"
 
@@ -59,8 +60,12 @@ tasks.named<Jar>("jar") {
             "Plugin-Description" to pluginDescription,
             "Plugin-Version" to pluginVersion,
             "Plugin-Provider" to pluginProvider,
-            "Plugin-Has-Config" to "true",
+            "Plugin-Has-Config" to "false",
             "Plugin-Open-Source-Url" to pluginRepository,
+            "Plugin-Api-Min" to "2",
+            "Plugin-Api-Max" to "2",
+            "Plugin-Capabilities" to
+                "audio.gain,audio.decoder.trusted,audio.processor.trusted",
         )
     }
 }

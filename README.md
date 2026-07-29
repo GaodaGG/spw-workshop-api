@@ -20,8 +20,8 @@ SPW 创意工坊 (Mod) API 是一个为实现 SPW 插件/模块而设计的库�
 
 ```toml
 [versions]
-# 0.1.0-dev10 替换为最新的（或需要的）版本
-spw-workshop-api = "0.1.0-dev14"
+# 将版本替换为最新的（或需要的）版本
+spw-workshop-api = "0.2.0-dev02"
 
 [libraries]
 spw-workshop-api = { group = "com.github.Moriafly", name = "spw-workshop-api", version.ref = "spw-workshop-api" }
@@ -150,6 +150,16 @@ class ClassicalPlugin : SpwPlugin() {
 - `Plugin-Description`: 插件描述 （可选）
 - `Plugin-Open-Source-Url`: 插件开源地址（可选）
 - `Plugin-Has-Config`: 插件是否有配置文件（可选），值为 `true` 或 `false` 详细见 [配置文件](docs/configs.md)
+- `Plugin-Api-Min`: 插件兼容的最低 Workshop API level（可选，正整数）
+- `Plugin-Api-Max`: 插件兼容的最高 Workshop API level（可选，正整数）
+- `Plugin-Capabilities`: 逗号分隔的能力声明（可选），音频能力见 [音频管线](docs/audio-pipeline.md)
+
+未声明 `Plugin-Api-Min` 的旧插件按 API level 1 处理；未声明
+`Plugin-Api-Max` 表示不限制宿主上限。未声明的敏感能力不会自动授权。
+
+## 音频管线
+
+Workshop API 0.2 支持安全响度增益、自定义解码器和受信任的实时 PCM 处理器。接口契约、选择顺序、线程限制及示例见 [音频管线文档](docs/audio-pipeline.md)。
 
 ## 混淆配置
 

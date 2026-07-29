@@ -19,6 +19,7 @@
 
 package com.xuncorp.spw.workshop.api
 
+import com.xuncorp.spw.workshop.api.audio.AudioPipeline
 import com.xuncorp.spw.workshop.api.config.ConfigManager
 import com.xuncorp.spw.workshop.api.event.PlaybackEventBus
 import com.xuncorp.spw.workshop.api.pipeline.lyrics.LyricsPipeline
@@ -46,6 +47,15 @@ interface WorkshopApi {
      * 插件通过注册 [LyricsProvider] 来参与歌词查找流程
      */
     val lyricsPipeline: LyricsPipeline
+
+    /**
+     * 音频管线
+     *
+     * 插件可注册安全增益、自定义解码器和受信任 PCM 处理器
+     */
+    @UnstableSpwWorkshopApi
+    @SinceApi("1.16", "0.2.0-dev02")
+    val audioPipeline: AudioPipeline
 
     /**
      * 实用工具相关
@@ -165,5 +175,12 @@ interface WorkshopApi {
             @JvmStatic
             @JvmName("lyricsPipeline")
             get() = instance.lyricsPipeline
+
+        @UnstableSpwWorkshopApi
+        @SinceApi("1.16", "0.2.0-dev02")
+        val audioPipeline: AudioPipeline
+            @JvmStatic
+            @JvmName("audioPipeline")
+            get() = instance.audioPipeline
     }
 }
